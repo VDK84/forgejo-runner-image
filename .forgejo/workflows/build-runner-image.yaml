@@ -7,6 +7,7 @@ on:
     paths:
       - 'Dockerfile'
       - 'smallstep-root-ca.crt'
+      - '.forgejo/workflows/**'
   workflow_dispatch:
     inputs:
       bump_type:
@@ -27,7 +28,7 @@ permissions:
 env:
   REGISTRY: git.rusc.local
   IMAGE_NAME: vdk84/forgejo-runner-image
-  CONTAINER_HOST: unix:///run/user/1000/podman/podman.sock
+  CONTAINER_HOST: unix:///var/run/docker.sock
 
 jobs:
   build-and-publish:

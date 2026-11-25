@@ -32,7 +32,7 @@ Aquesta imatge està basada en `node:22-bookworm-slim` i inclou:
   - `jq`
   - `unzip`, `tar`, `xz-utils`
 - **Gestió de contenidors**:
-  - `podman` (apuntant de forma remota al socket del host `/run/user/1000/podman/podman.sock`).
+  - `podman` (apuntant de forma remota al socket `/var/run/docker.sock` muntat pel runner).
 
 ## Com es Construeix (Bootstrap amb `node-slim`)
 
