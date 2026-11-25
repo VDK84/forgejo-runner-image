@@ -28,7 +28,7 @@ permissions:
 
 env:
   REGISTRY: git.rusc.local
-  IMAGE_NAME: vdk84/forgejo-runner-image
+  IMAGE_NAME: rusc/forgejo-runner-image
   CONTAINER_HOST: unix:///var/run/docker.sock
 
 jobs:

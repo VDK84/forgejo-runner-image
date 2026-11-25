@@ -8,7 +8,7 @@ Al nostre homelab, els runners d'accions de Forgejo s'executen com a contenidors
 
 Per evitar problemes de `runc` amb Docker Buildx dins d'entorns d'espais de noms rootless i reduir dràsticament el temps de descàrrega i arrancada de cada treball de CI/CD, fem servir una arquitectura de **doble runner**:
 
-1. **`rusc-runner`** (`docker://git.rusc.local/vdk84/forgejo-runner-image:latest`):
+1. **`rusc-runner`** (`docker://git.rusc.local/rusc/forgejo-runner-image:latest`):
    - Imatge tunejada pròpia amb totes les eines essencials i la CA arrel interna ja preinstal·lades.
    - És el runner per defecte per a tots els fluxos de treball (`runs-on: rusc-runner`).
 2. **`node-slim`** (`docker://node:22-bookworm-slim`):
@@ -39,7 +39,7 @@ Aquesta imatge està basada en `node:22-bookworm-slim` i inclou:
 El workflow `.forgejo/workflows/build-runner-image.yaml`:
 - S'executa amb `runs-on: node-slim`.
 - Instal·la en un pas previ de bootstrap les utilitats mínimes necessàries per fer el `checkout` i cridar `podman --remote`.
-- Construeix i puja la imatge a `git.rusc.local/vdk84/forgejo-runner-image` etiquetada amb:
+- Construeix i puja la imatge a `git.rusc.local/rusc/forgejo-runner-image` etiquetada amb:
   - `latest`
   - SemVer automàtic (`vX.Y.Z`, `X.Y.Z`, `vX.Y`, `vX`)
   - Commit SHA
@@ -47,6 +47,6 @@ El workflow `.forgejo/workflows/build-runner-image.yaml`:
 ## Reconstrucció Manual
 
 Per llançar una nova versió o reconstruir la imatge manualment:
-1. Accedeix a **Forgejo** (`https://git.rusc.local/vdk84/forgejo-runner-image/actions`).
+1. Accedeix a **Forgejo** (`https://git.rusc.local/Rusc/forgejo-runner-image/actions`).
 2. Selecciona el workflow **"Build and Push Forgejo Runner Image"**.
 3. Fes clic a **Run workflow** i, si cal, selecciona el tipus d'increment SemVer desitjat (`auto`, `patch`, `minor`, `major`).
