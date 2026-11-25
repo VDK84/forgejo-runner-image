@@ -1,5 +1,7 @@
 FROM node:22-bookworm-slim
 
+ARG TARGETARCH=amd64
+ARG PODMAN_REMOTE_VERSION=v6.2.0
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Instal·lació d'eines essencials per a runners de CI/CD
@@ -9,12 +11,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     git \
     jq \
-    podman \
     openssh-client \
     unzip \
     tar \
     xz-utils \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -fsSL "https://github.com/podman-container-tools/podman/releases/download/${PODMAN_REMOTE_VERSION}/podman-remote-static-linux_${TARGETARCH}.tar.gz" \
+    | tar -xz --strip-components=1 -C /usr/local/bin "bin/podman-remote-static-linux_${TARGETARCH}" \
+    && mv "/usr/local/bin/podman-remote-static-linux_${TARGETARCH}" /usr/local/bin/podman \
+    && chmod +x /usr/local/bin/podman
 
 # Instal·lació del certificat CA arrel intern de Smallstep
 COPY smallstep-root-ca.crt /usr/local/share/ca-certificates/smallstep-root-ca.crt
